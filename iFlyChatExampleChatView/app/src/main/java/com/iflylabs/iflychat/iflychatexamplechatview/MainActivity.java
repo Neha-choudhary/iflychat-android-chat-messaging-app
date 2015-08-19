@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
 
         session = new iFlyChatUserSession(USERNAME,PASSWORD,SESSIONKEY);
 
-        config = new iFlyChatConfig(SERVERHOST,AUTHURL,session);
+        config = new iFlyChatConfig(SERVERHOST,AUTHURL,false,session);
 
         authService = new iFlyChatUserAuthService(config,session,getApplicationContext());
 
@@ -257,5 +257,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onStop() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         super.onStop();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        service.diconnectChat();
+        super.onDestroy();
     }
 }
