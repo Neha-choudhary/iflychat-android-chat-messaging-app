@@ -46,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
     String PASSWORD = "password";
 
 
+
     BroadcastReceiver receiver;
 
     RelativeLayout top_bar;
@@ -93,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
         session = new iFlyChatUserSession(USERNAME,PASSWORD,SESSIONKEY);
 
-        config = new iFlyChatConfig(SERVERHOST,AUTHURL,false,session);
+        config = new iFlyChatConfig(SERVERHOST, AUTHURL, true, session);
 
         authService = new iFlyChatUserAuthService(config,session,getApplicationContext());
 
