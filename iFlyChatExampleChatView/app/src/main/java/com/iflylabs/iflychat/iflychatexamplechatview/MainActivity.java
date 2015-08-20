@@ -262,7 +262,7 @@ public class MainActivity extends ActionBarActivity {
     
     @Override
     protected void onDestroy() {
-        service.diconnectChat();
+        service.disconnectChat();
         super.onDestroy();
     }
 }
