@@ -18,19 +18,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
 import com.iflylabs.iFlyChatLibrary.iFlyChatConfig;
 import com.iflylabs.iFlyChatLibrary.iFlyChatMessage;
 import com.iflylabs.iFlyChatLibrary.iFlyChatService;
 import com.iflylabs.iFlyChatLibrary.iFlyChatUser;
 import com.iflylabs.iFlyChatLibrary.iFlyChatUserAuthService;
 import com.iflylabs.iFlyChatLibrary.iFlyChatUserSession;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +34,12 @@ public class MainActivity extends ActionBarActivity {
     String ROOMID = "0";
     String SESSIONKEY = "";
     String SERVERHOST = "api.iflychat.com";
-    String AUTHURL = "http://your.website.com/auth-url";
-    String USERNAME = "username";
-    String PASSWORD = "password";
+    String AUTHURL = "http://192.168.2.53/drupal20/drupal-7.38/drupalchat/mobile-auth";
+
+    //prateek http://192.168.2.213:8888/drupal100/drupalchat/mobile-auth
+    // amit http://192.168.2.53/drupal20/drupal-7.38/drupalchat/mobile-auth
+    String USERNAME = "Nikita";
+    String PASSWORD = "nikita";
 
 
 
@@ -104,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
 
         top_bar.setBackgroundColor(Color.YELLOW);
         chat_status.setBackgroundColor(Color.YELLOW);
-        chat_status.setText("Connecting...");
+        chat_status.setText("Connecting");
 
 
         loginSession = getApplicationContext().getSharedPreferences("loginSession",0);
@@ -132,13 +128,13 @@ public class MainActivity extends ActionBarActivity {
                 {
                     loggedUser = intent.getParcelableExtra("currentUser");
                     editor.putString("uid",loggedUser.getId());
-                    editor.putString("name",loggedUser.getName());
+                    editor.putString("name", loggedUser.getName());
 
                     editor.apply();
 
-                    top_bar.setBackgroundColor(Color.GREEN);
-                    chat_status.setBackgroundColor(Color.GREEN);
-                    chat_status.setText("Connected");
+                    top_bar.setBackgroundColor(Color.parseColor("#00D948"));
+                    chat_status.setBackgroundColor(Color.parseColor("#00D948"));
+                    chat_status.setText("Connected");//#4CD964//0BD318
                 }
                 else if(intent.getAction().equals("iFlyChat.onChatDisconnect"))
                 {
