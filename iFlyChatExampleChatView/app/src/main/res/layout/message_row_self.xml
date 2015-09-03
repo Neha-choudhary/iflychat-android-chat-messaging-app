@@ -66,8 +66,8 @@
                 android:layout_width="wrap_content"
                 android:maxWidth="200dp"
                 android:textStyle="bold"
-
                 android:text="k"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:textColor="#ffffff"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="#ffffff"
-                android:layout_gravity="center"/>
+                android:layout_gravity="left"/>
 
             <TextView
                 android:id="@+id/message_time"
