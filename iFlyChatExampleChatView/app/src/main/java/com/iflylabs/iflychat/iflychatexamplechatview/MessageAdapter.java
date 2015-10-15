@@ -228,7 +228,6 @@ public class MessageAdapter extends BaseAdapter {
                 stream = getHttpConnection(url);
                 bitmap = BitmapFactory.
                         decodeStream(stream, null, bmOptions);
-                stream.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
