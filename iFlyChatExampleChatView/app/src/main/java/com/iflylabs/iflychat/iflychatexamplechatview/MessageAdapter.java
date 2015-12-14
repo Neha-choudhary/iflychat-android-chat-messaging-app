@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.iflylabs.iFlyChatLibrary.iFlyChatMessage;
+import com.iflylabs.iflychatexamplechatview.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -23,26 +27,30 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
-/**
- * Created by prateek on 13/08/15.
- */
+
 public class MessageAdapter extends BaseAdapter {
 
     List<iFlyChatMessage> messages;
-    Context mContext;
-
+    Context context;
     SharedPreferences loginSession;
 
+    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().round();
     private LayoutInflater layoutInflater;
+    boolean defaultUserImageFlag = false;
+    private HashMap<String ,String> chatSettings;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM HH:mm");
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
 
 
-    public MessageAdapter(List<iFlyChatMessage> messageList, Context mContext) {
+    public MessageAdapter(List<iFlyChatMessage> messageList, Context mContext, HashMap<String ,String> chatSettings) {
         messages = messageList;
-        this.mContext = mContext;
+        this.context = mContext;
+        this.chatSettings=chatSettings;
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         loginSession = mContext.getSharedPreferences("loginSession",0);
     }
@@ -74,43 +82,33 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View messageView, ViewGroup parent) {
 
         ViewHolder holder;
-        holder = new ViewHolder();
-        NinePatchDrawable background;
 
         int type = getItemViewType(position);
 
 
-        if (convertView == null)
+        if (messageView == null)
         {
 
             if(type == 0)
             {
-                convertView = layoutInflater.inflate(R.layout.message_row_self, parent, false);
+                messageView = layoutInflater.inflate(R.layout.sender_message_row, parent, false);
 
             }
             else if(type == 1)
             {
-                convertView = layoutInflater.inflate(R.layout.message_row_other, parent, false);
+                messageView = layoutInflater.inflate(R.layout.receiver_message_row, parent, false);
             }
 
+            holder = new ViewHolder(messageView);
+            messageView.setTag(holder);
 
-
-            holder.userName = (TextView) convertView.findViewById(R.id.username);
-
-            holder.message_text = (TextView) convertView.findViewById(R.id.message_text);
-
-            holder.message_time = (TextView) convertView.findViewById(R.id.message_time);
-
-            holder.message_row_image = (ImageView) convertView.findViewById(R.id.message_row_image);
-
-            convertView.setTag(holder);
         }
         else
         {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) messageView.getTag();
         }
 
         iFlyChatMessage message = (iFlyChatMessage) messages.get(position);
@@ -126,7 +124,13 @@ public class MessageAdapter extends BaseAdapter {
         String currentDate = currentTimeAndDate.substring(0, 5);
 
         //Message Date and Time
-        Long messageEpoch = Long.parseLong(message.getTime())*1000;
+        Long messageEpoch= 0l;
+
+        if(message.getTime().length()==10){
+            messageEpoch = Long.parseLong(message.getTime())*1000;
+        }
+        else
+            messageEpoch = Long.parseLong(message.getTime());
 
         String currentMessageTimeAndDate = sdf.format(new Date(messageEpoch));
 
@@ -135,29 +139,19 @@ public class MessageAdapter extends BaseAdapter {
         String currentMessageTime = currentMessageTimeAndDate.substring(6, 11);
 
         // If todays date and message date is same then display only message time. Otherwise, display both date and time.
-        if(currentDate.equals(currentMessageDate))
-        holder.message_time.setText(currentMessageTime);
-        else
-        holder.message_time.setText(currentMessageTimeAndDate);
+        if(currentDate.equals(currentMessageDate)){
+
+            holder.message_time.setText(currentMessageTime);
+        }
+        else{
+            holder.message_time.setText(currentMessageTimeAndDate);
+        }
 
         // get FromAvatarUrl of the user and if it is null or empty show the default Url.
         String avatarUrl = messages.get(position).getFromAvatarUrl();
-        if (avatarUrl.equals(null) || avatarUrl.equals("")) {
-            avatarUrl = "//cdn.iflychat.com/mobile/images/default_avatar.png";
-        }
 
-        // Create an object for subclass of AsyncTask
-        if (holder.message_row_image != null) {
-            // check for url.
-            if (cancelPotentialDownload(avatarUrl, holder.message_row_image)) {
-                GetUsersTask task = new GetUsersTask(holder.message_row_image);
-                DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
-                holder.message_row_image.setImageDrawable(downloadedDrawable);
-                task.execute("http:" + avatarUrl);
-            }
-        }
-
-        return convertView;
+        setChatImage(holder, messages.get(position).getFromId(), messages.get(position).getFromName(), avatarUrl);
+        return messageView;
     }
 
 
@@ -166,8 +160,200 @@ public class MessageAdapter extends BaseAdapter {
         TextView message_text;
         TextView message_time;
         ImageView message_row_image;
+        CircularImageView message_row_circular_image;
+
+
+        private View view;
+        private int number;
+
+
+        private ViewHolder(View messageView) {
+
+            this.view = messageView;
+            userName = (TextView) messageView.findViewById(R.id.username);
+            message_text = (TextView) messageView.findViewById(R.id.message_text);
+
+            message_time = (TextView) messageView.findViewById(R.id.message_time);
+
+            message_row_circular_image = (CircularImageView) messageView.findViewById(R.id.message_row_circular_image);
+            message_row_image = (ImageView) messageView.findViewById(R.id.message_row_image);
+
+            Random ran = new Random();
+            int number = ran.nextInt(2);
+            this.number = number;
+        }
     }
 
+    private void setChatImage(ViewHolder holder, String id, String userName, String avatarUrl){
+
+        String upToNCharacters = id.substring(0, Math.min(id.length(), 2));
+        //User without Guest Prefix
+        if(!upToNCharacters.equals("0-")){
+
+            if(!avatarUrl.equals(null) && !avatarUrl.equals("")) {
+
+                if (avatarUrl.contains("default_avatar") || avatarUrl.contains("gravatar")) {
+
+                    if (defaultUserImageFlag == true) {
+
+                        holder.message_row_circular_image.setVisibility(View.VISIBLE);
+                        holder.message_row_image.setVisibility(View.GONE);
+                        Drawable placeholder;
+
+                        if (holder.number == 0)
+                            placeholder = ContextCompat.getDrawable(context, R.drawable.male_user);
+                        else
+                            placeholder = ContextCompat.getDrawable(context, R.drawable.female_user);
+
+                        holder.message_row_circular_image.setImageDrawable(placeholder);
+                        holder.message_row_circular_image.setBorderColor(mColorGenerator.getColor(userName));
+
+                    } else {
+                        char firstLetter = userName.charAt(0);
+                        String name = Character.toString(firstLetter);
+                        if(name.matches("[a-zA-Z]+")) {
+
+                            holder.message_row_circular_image.setVisibility(View.GONE);
+                            holder.message_row_image.setVisibility(View.VISIBLE);
+                            char upperCaseLetter = Character.toUpperCase(userName.charAt(0));
+                            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(upperCaseLetter), mColorGenerator.getColor(userName));
+                            holder.message_row_image.setImageDrawable(drawable);
+                            holder.view.setBackgroundColor(Color.TRANSPARENT);
+                        }
+                        //Name Contains number or special character
+                        else {
+
+                            holder.message_row_circular_image.setVisibility(View.VISIBLE);
+                            holder.message_row_image.setVisibility(View.GONE);
+                            Drawable placeholder;
+
+                            if(holder.number==0)
+                                placeholder =   ContextCompat.getDrawable(context, R.drawable.male_user);
+                            else
+                                placeholder =   ContextCompat.getDrawable(context, R.drawable.female_user);
+
+                            holder.message_row_circular_image.setImageDrawable(placeholder);
+                            holder.message_row_circular_image.setBorderColor(mColorGenerator.getColor(userName));
+
+                        }
+
+                    }
+                } else {
+
+                    if (holder.message_row_circular_image != null) {
+                        holder.message_row_image.setVisibility(View.GONE);
+                        holder.message_row_circular_image.setVisibility(View.VISIBLE);
+
+                        // check for url.
+                        if (cancelPotentialDownload(avatarUrl, holder.message_row_circular_image)) {
+                            GetUsersTask task = new GetUsersTask(holder.message_row_circular_image);
+                            DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
+                            // CircularImageView circularImageView = (CircularImageView) findViewById(R.id.yourCircularImageView);
+                            holder.message_row_circular_image.setImageDrawable(downloadedDrawable);
+                            task.execute("http:" + avatarUrl);
+
+                        }
+                    }
+                }
+            }
+            else if(defaultUserImageFlag==true) {
+
+                holder.message_row_circular_image.setVisibility(View.VISIBLE);
+                holder.message_row_image.setVisibility(View.GONE);
+                Drawable placeholder;
+
+                if(holder.number==0)
+                    placeholder =   ContextCompat.getDrawable(context, R.drawable.male_user);
+                else
+                    placeholder =   ContextCompat.getDrawable(context, R.drawable.female_user);
+
+                holder.message_row_circular_image.setImageDrawable(placeholder);
+                holder.message_row_circular_image.setBorderColor(mColorGenerator.getColor(userName));
+            }
+            else{
+                char firstLetter = userName.charAt(0);
+                String name = Character.toString(firstLetter);
+                if(name.matches("[a-zA-Z]+")) {
+
+                    holder.message_row_circular_image.setVisibility(View.GONE);
+                    holder.message_row_image.setVisibility(View.VISIBLE);
+                    char upperCaseLetter = Character.toUpperCase(userName.charAt(0));
+                    TextDrawable drawable = mDrawableBuilder.build(String.valueOf(upperCaseLetter), mColorGenerator.getColor(userName));
+                    holder.message_row_image.setImageDrawable(drawable);
+                    holder.view.setBackgroundColor(Color.TRANSPARENT);
+                }
+                //Name Contains number or special character
+                else {
+
+                    holder.message_row_circular_image.setVisibility(View.VISIBLE);
+                    holder.message_row_image.setVisibility(View.GONE);
+                    Drawable placeholder;
+
+                    if(holder.number==0)
+                        placeholder =   ContextCompat.getDrawable(context, R.drawable.male_user);
+                    else
+                        placeholder =   ContextCompat.getDrawable(context, R.drawable.female_user);
+
+                    holder.message_row_circular_image.setImageDrawable(placeholder);
+                    holder.message_row_circular_image.setBorderColor(mColorGenerator.getColor(userName));
+
+
+                }
+            }
+
+        }
+        else{
+            if(defaultUserImageFlag==true){
+
+                if (holder.message_row_circular_image != null) {
+                    holder.message_row_image.setVisibility(View.GONE);
+                    holder.message_row_circular_image.setVisibility(View.VISIBLE);
+
+                    // check for url.
+                    if (cancelPotentialDownload(avatarUrl, holder.message_row_circular_image)) {
+                        GetUsersTask task = new GetUsersTask(holder.message_row_circular_image);
+                        DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
+                        // CircularImageView circularImageView = (CircularImageView) findViewById(R.id.yourCircularImageView);
+                        holder.message_row_circular_image.setImageDrawable(downloadedDrawable);
+                        task.execute("http:" + avatarUrl);
+
+                    }
+                }
+            }
+            else{
+
+                String value  = chatSettings.get("guestPrefix");
+                String name = userName.replaceFirst(value,"");
+
+                if(name.matches("[a-zA-Z]+")) {
+
+                    holder.message_row_circular_image.setVisibility(View.GONE);
+                    holder.message_row_image.setVisibility(View.VISIBLE);
+                    char upperCaseLetter = Character.toUpperCase(name.charAt(0));
+
+                    TextDrawable drawable = mDrawableBuilder.build(String.valueOf(upperCaseLetter), mColorGenerator.getColor(name));
+                    holder.message_row_image.setImageDrawable(drawable);
+                    holder.view.setBackgroundColor(Color.TRANSPARENT);
+                }
+                else{
+
+                    holder.message_row_circular_image.setVisibility(View.VISIBLE);
+                    holder.message_row_image.setVisibility(View.GONE);
+                    Drawable placeholder;
+
+                    if(holder.number==0)
+                        placeholder =   ContextCompat.getDrawable(context, R.drawable.male_user);
+                    else
+                        placeholder =   ContextCompat.getDrawable(context, R.drawable.female_user);
+
+                    holder.message_row_circular_image.setImageDrawable(placeholder);
+                    holder.message_row_circular_image.setBorderColor(mColorGenerator.getColor(userName));
+
+                }
+            }
+        }
+
+    }
 
 
     //AsyncTask to download the image from url asynchronously
@@ -205,9 +391,6 @@ public class MessageAdapter extends BaseAdapter {
                         if (result != null) {
                             Drawable drawable = new BitmapDrawable(result);
                             imageView.setImageDrawable(drawable);
-                        } else {
-                            Drawable placeholder = imageView.getContext().getResources().getDrawable(R.drawable.default_avatar);
-                            imageView.setImageDrawable(placeholder);
                         }
                     }
 
@@ -228,6 +411,7 @@ public class MessageAdapter extends BaseAdapter {
                 stream = getHttpConnection(url);
                 bitmap = BitmapFactory.
                         decodeStream(stream, null, bmOptions);
+//                stream.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

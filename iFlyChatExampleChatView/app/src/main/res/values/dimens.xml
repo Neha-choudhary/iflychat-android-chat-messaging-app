@@ -2,4 +2,115 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- firstcurve xml dimen-->
+    <dimen name="firstcurve_bottomLeftRadius">10dp</dimen>
+    <dimen name="firstcurve_bottomRightRadius">10dp</dimen>
+    <dimen name="firstcurve_topLeftRadius">5dp</dimen>
+    <dimen name="firstcurve_topRightRadius">5dp</dimen>
+
+    <!-- receiver_mainblock xml dimen-->
+    <dimen name="receiver_mainblock_bottomLeftRadius">16dp</dimen>
+    <dimen name="receiver_mainblock_bottomRightRadius">16dp</dimen>
+    <dimen name="receiver_mainblock_topLeftRadius">16dp</dimen>
+    <dimen name="receiver_mainblock_topRightRadius">16dp</dimen>
+
+
+    <!-- receiver_secondcurve xml dimen-->
+    <dimen name="receiver_secondcurve_bottomLeftRadius">30dp</dimen>
+    <dimen name="receiver_secondcurve_bottomRightRadius">30dp</dimen>
+    <dimen name="receiver_secondcurve_topLeftRadius">30dp</dimen>
+    <dimen name="receiver_secondcurve_topRightRadius">30dp</dimen>
+
+    <!-- sender_mainblock xml dimen-->
+    <dimen name="sender_mainblock_bottomLeftRadius">16dp</dimen>
+    <dimen name="sender_mainblock_bottomRightRadius">16dp</dimen>
+    <dimen name="sender_mainblock_topLeftRadius">16dp</dimen>
+    <dimen name="sender_mainblock_topRightRadius">16dp</dimen>
+
+    <!-- sender_secondcurve xml dimen-->
+    <dimen name="sender_secondcurve_bottomLeftRadius">30dp</dimen>
+    <dimen name="sender_secondcurve_bottomRightRadius">30dp</dimen>
+    <dimen name="sender_secondcurve_topLeftRadius">30dp</dimen>
+    <dimen name="sender_secondcurve_topRightRadius">30dp</dimen>
+
+    <!-- activity_main xml dimen-->
+    <dimen name="top_bar_height">30dp</dimen>
+    <dimen name="chat_status_height">20dp</dimen>
+    <dimen name="bottom_write_bar_marginTop">10dp</dimen>
+    <dimen name="write_message_marginTop">10dp</dimen>
+    <dimen name="write_message_marginBottom">10dp</dimen>
+    <dimen name="write_message_padding">5dp</dimen>
+    <dimen name="write_message_minHeight">35dp</dimen>
+    <dimen name="write_message_textSize">16sp</dimen>
+    <dimen name="message_list_layoutHeight">0dp</dimen>
+    <dimen name="message_list_dividerHeight">0dp</dimen>
+
+    <!-- receiver_message_row xml dimen-->
+    <dimen name="receiver_message_row_firstRelativeLayout_paddingLeft">10dp</dimen>
+    <dimen name="receiver_message_row_secondRelativeLayout_minWidth">120dp</dimen>
+    <dimen name="receiver_message_row_secondRelativeLayout_minHeight">32dp</dimen>
+    <dimen name="receiver_message_row_secondcurve_width">25dp</dimen>
+    <dimen name="receiver_message_row_secondcurve_height">25dp</dimen>
+    <dimen name="receiver_message_row_secondcurve_marginLeft">5dp</dimen>
+    <dimen name="receiver_message_row_receiver_message_row_View_marginBottom">15dp</dimen>
+    <dimen name="receiver_message_row_mainblock_minWidth">100dp</dimen>
+    <dimen name="receiver_message_row_mainblock_minHeight">32dp</dimen>
+    <dimen name="receiver_message_row_mainblock_paddingLeft">10dp</dimen>
+    <dimen name="receiver_message_row_mainblock_paddingRight">10dp</dimen>
+    <dimen name="receiver_message_row_mainblock_paddingTop">5dp</dimen>
+    <dimen name="receiver_message_row_mainblock_paddingBottom">5dp</dimen>
+    <dimen name="receiver_message_row_username_maxWidth">200dp</dimen>
+    <dimen name="receiver_message_row_username_textSize">13sp</dimen>
+    <dimen name="receiver_message_row_message_text_maxWidth">200dp</dimen>
+    <dimen name="receiver_message_row_message_text_textSize">15sp</dimen>
+    <dimen name="receiver_message_row_message_time_maxWidth">200dp</dimen>
+    <dimen name="receiver_message_row_message_time_textSize">10sp</dimen>
+    <dimen name="receiver_message_row_firstcurve_width">20dp</dimen>
+    <dimen name="receiver_message_row_firstcurve_height">32dp</dimen>
+    <dimen name="receiver_message_row_firstcurve_marginBottom">-2dp</dimen>
+    <dimen name="receiver_message_row_message_row_image_width">25dp</dimen>
+    <dimen name="receiver_message_row__message_row_image_height">25dp</dimen>
+    <dimen name="receiver_message_row_message_row_image_marginRight">-15dp</dimen>
+
+    <!-- room_layout xml dimen -->
+    <dimen name="navigation_previous_item_image_marginLeft">0dp</dimen>
+    <dimen name="navigation_previous_item_image_marginTop">5dp</dimen>
+    <dimen name="navigation_previous_item_image_marginBottom">5dp</dimen>
+    <dimen name="inputSearch_textSize">15sp</dimen>
+    <dimen name="default_room_width">25dp</dimen>
+    <dimen name="default_room_height">25dp</dimen>
+
+    <!-- sender_message_row xml dimen -->
+    <dimen name="sender_message_row_firstRelativeLayout_paddingRight">10dp</dimen>
+    <dimen name="sender_message_row_secondRelativeLayout_minWidth">120dp</dimen>
+    <dimen name="sender_message_row_secondRelativeLayout_minHeight">32dp</dimen>
+    <dimen name="sender_message_row_secondcurve_width">25dp</dimen>
+    <dimen name="sender_message_row_secondcurve_height">25dp</dimen>
+    <dimen name="sender_message_row_secondcurve_marginRight">5dp</dimen>
+    <dimen name="sender_message_row_sender_message_row_View_marginBottom">15dp</dimen>
+    <dimen name="sender_message_row_mainblock_minWidth">100dp</dimen>
+    <dimen name="sender_message_row_mainblock_minHeight">32dp</dimen>
+    <dimen name="sender_message_row_mainblock_paddingLeft">10dp</dimen>
+    <dimen name="sender_message_row_mainblock_paddingRight">10dp</dimen>
+    <dimen name="sender_message_row_mainblock_paddingTop">5dp</dimen>
+    <dimen name="sender_message_row_mainblock_paddingBottom">5dp</dimen>
+    <dimen name="sender_message_row_username_maxWidth">200dp</dimen>
+    <dimen name="sender_message_row_username_textSize">13sp</dimen>
+    <dimen name="sender_message_row_message_text_maxWidth">200dp</dimen>
+    <dimen name="sender_message_row_message_text_textSize">15sp</dimen>
+    <dimen name="sender_message_row_message_time_maxWidth">200dp</dimen>
+    <dimen name="sender_message_row_message_time_textSize">10sp</dimen>
+    <dimen name="sender_message_row_firstcurve_width">20dp</dimen>
+    <dimen name="sender_message_row_firstcurve_height">32dp</dimen>
+    <dimen name="sender_message_row_firstcurve_marginBottom">-2dp</dimen>
+    <dimen name="sender_message_row_message_row_image_width">25dp</dimen>
+    <dimen name="sender_message_row__message_row_image_height">25dp</dimen>
+    <dimen name="sender_message_row_message_row_image_marginLeft">-15dp</dimen>
+
+    <!-- user_layout xml dimen -->
+    <dimen name="user_layout_inputSearch_marginLeft">20dp</dimen>
+    <dimen name="user_layout_inputSearch_textSize">18sp</dimen>
+
+
 </resources>

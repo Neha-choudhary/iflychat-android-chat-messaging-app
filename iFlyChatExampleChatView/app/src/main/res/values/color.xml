@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1565c0</color>
+    <color name="colorPrimaryDark">#FF000000</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#3498db</color>
+    <color name="tool_bar_background">#1565c0</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="black">#000000</color>
+
+    <!-- receiver_mainblock xml color -->
+    <color name="receiver_mainblock_grey">#e3e3e8</color>
+
+    <!-- receiver_secondcurve xml color -->
+    <color name="receiver_secondcurve_grey">#e3e3e8</color>
+
+    <!-- sender_mainblock xml color -->
+    <color name="sender_mainblock_blue">#37acfa</color>
+
+    <!-- sender_secondcurve xml color -->
+    <color name="sender_secondcurve_blue">#37acfa</color>
+
+    <!-- activity_main xml color -->
+    <color name="bottom_write_bar_grey">#EEEEEE</color>
+    <color name="write_message_textColorHint">#F1F1F1</color>
+
+    <!-- room_layout xml color -->
+    <color name="navigation_previous_item_image_tint">#37acfa</color>
+
+
+
+
+
+
+</resources>

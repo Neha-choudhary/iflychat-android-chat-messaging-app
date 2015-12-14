@@ -1,103 +1,218 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:id="@+id/main"
-    android:background="#FFFFFF">
-
-    <RelativeLayout
-        android:id="@+id/top_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:background="#FF0000">
-
-
-        <TextView
-            android:id="@+id/chat_status"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:background="#FF0000"
-            android:text="Not connected"
-            android:layout_centerInParent="true">
-
-        </TextView>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/bottom_write_bar"
-        android:layout_width="fill_parent"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarTabsView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="#EEEEEE"
-        >
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <include layout="@layout/user_layout"
+            />
+    </android.support.design.widget.AppBarLayout>
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/toolbarTabsView"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/chatview_scroll_layout"
+        android:background="@color/white">
 
-        <EditText
-            android:id="@+id/write_message"
+        <RelativeLayout
+            android:id="@+id/top_bar"
             android:layout_width="fill_parent"
+            android:layout_height="@dimen/top_bar_height"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:background="@color/red">
+
+
+            <TextView
+                android:id="@+id/chat_status"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/chat_status_height"
+                android:background="@color/red"
+                android:text="Not Connected"
+                android:layout_centerInParent="true">
+
+            </TextView>
+
+            <ProgressBar
+
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+
+                android:layout_height="20dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/attachment_layout"
+            android:layout_above="@+id/bottom_write_bar"
+            android:visibility="gone"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:padding="5dp"
-            android:isScrollContainer="true"
-            android:minHeight="35dp"
-            android:inputType="textMultiLine"
-            android:layout_toLeftOf = "@+id/send_message"
-            android:background="#FFFFFF"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:textColorHint="#f1f1f1"
-            android:hint = "Type text message"
+            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_rect_shape">
+
+
+
+            <RelativeLayout
+                android:id="@+id/take_photo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#1565c0">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:text="Take Photo"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/take_video_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/take_photo_layout"
+                android:background="#1565c0">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:text="Take Video"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/select_file_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+
+                android:layout_below="@+id/take_video_layout"
+                android:background="#1565c0">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:text="Select File"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/record_sound_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/select_file_layout"
+                android:background="#1565c0">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
+                    android:text="Record Sound"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bottom_write_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_write_bar_marginTop"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bottom_write_bar_grey"
             >
 
-        </EditText>
+            <ImageButton
+                android:id="@+id/attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/content_attachment_lightblue"
+                android:layout_alignParentLeft="true"
+                android:background="@color/bottom_write_bar_grey"
+                android:layout_centerVertical="true"
+                />
 
-        <ImageButton
-            android:id="@+id/send_message"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight = "5dp"
-            android:src="@drawable/social_send_now"
-            android:onClick="sendMessage"
-            android:layout_alignParentRight="true"
-            android:background="#EEEEEE"
-            android:layout_centerVertical="true"
 
-            />
+            <EditText
+                android:id="@+id/write_message"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/write_message_marginTop"
+                android:layout_marginBottom="@dimen/write_message_marginBottom"
+                android:padding="@dimen/write_message_padding"
+                android:isScrollContainer="true"
+                android:minHeight="@dimen/write_message_minHeight"
+                android:inputType="textMultiLine"
+                android:layout_toRightOf="@+id/attachment"
+                android:layout_toLeftOf="@+id/send_message"
+                android:background="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColorHint="@color/write_message_textColorHint"
+                android:hint = "Type your message"
+                android:textSize="@dimen/write_message_textSize"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/social_send_now_bluelight"
+                android:onClick="sendMessage"
+                android:layout_alignParentRight="true"
+                android:background="@color/bottom_write_bar_grey"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+        <ListView
+
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_write_bar"
+            android:layout_below="@+id/top_bar"
+            android:cacheColorHint="@color/black"
+            android:divider="@color/white"
+            android:stackFromBottom="true"
+            android:clickable="false"
+            android:transcriptMode="normal"
+            android:listSelector="#ffffff"
+            android:dividerHeight="@dimen/message_list_dividerHeight"
+            >
+        </ListView>
+
 
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/message_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_above="@id/bottom_write_bar"
-        android:layout_below="@id/top_bar"
-        android:cacheColorHint="#00000000"
-        android:divider="#FFFFFF"
-        android:stackFromBottom="true"
-        android:clickable="false"
-        android:transcriptMode="normal"
-        android:listSelector="#00000000"
-        android:dividerHeight="0dp"
-        >
-    </ListView>
-
-    <TextView
-        android:id="@+id/no_messages"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/bottom_write_bar"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical|center_horizontal"
-        android:autoText="false" />
 
 </RelativeLayout>

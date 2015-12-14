@@ -1,0 +1,16 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"   >
+
+    <solid
+        android:color="@color/receiver_mainblock_grey" >
+    </solid>
+
+    <corners
+        android:bottomLeftRadius="@dimen/receiver_mainblock_bottomLeftRadius"
+        android:bottomRightRadius="@dimen/receiver_mainblock_bottomRightRadius"
+        android:topLeftRadius="@dimen/receiver_mainblock_topLeftRadius"
+        android:topRightRadius="@dimen/receiver_mainblock_topRightRadius">
+    </corners>
+
+</shape>

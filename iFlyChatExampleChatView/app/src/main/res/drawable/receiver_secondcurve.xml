@@ -1,0 +1,16 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"   >
+
+    <solid
+        android:color="@color/receiver_secondcurve_grey" >
+    </solid>
+
+    <corners
+        android:bottomLeftRadius="@dimen/receiver_secondcurve_bottomLeftRadius"
+        android:bottomRightRadius="@dimen/receiver_secondcurve_bottomRightRadius"
+        android:topLeftRadius="@dimen/receiver_secondcurve_topLeftRadius"
+        android:topRightRadius="@dimen/receiver_secondcurve_topRightRadius">
+
+    </corners>
+</shape>

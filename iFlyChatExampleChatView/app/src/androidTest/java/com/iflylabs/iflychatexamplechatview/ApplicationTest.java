@@ -1,4 +1,4 @@
-package com.iflylabs.iflychat.iflychatexamplechatview;
+package com.iflylabs.iflychatexamplechatview;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
